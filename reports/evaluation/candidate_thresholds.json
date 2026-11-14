@@ -1,0 +1,74 @@
+{
+    "random_forest": {
+        "threshold": 0.4582825374318584,
+        "features": [
+            "code_module",
+            "code_presentation",
+            "target_assessment_type",
+            "target_date",
+            "total_clicks",
+            "activity_records",
+            "active_days",
+            "active_days_last_30_days",
+            "clicks_last_7_days",
+            "clicks_last_14_days",
+            "clicks_last_30_days",
+            "average_clicks_per_active_day"
+        ],
+        "target": "target_low_score"
+    },
+    "lightgbm": {
+        "threshold": 0.7252662771309571,
+        "features": [
+            "code_module",
+            "code_presentation",
+            "target_assessment_type",
+            "target_date",
+            "total_clicks",
+            "activity_records",
+            "active_days",
+            "active_days_last_30_days",
+            "clicks_last_7_days",
+            "clicks_last_14_days",
+            "clicks_last_30_days",
+            "average_clicks_per_active_day"
+        ],
+        "target": "target_low_score"
+    },
+    "xgboost": {
+        "threshold": 0.727801501750946,
+        "features": [
+            "code_module",
+            "code_presentation",
+            "target_assessment_type",
+            "target_date",
+            "total_clicks",
+            "activity_records",
+            "active_days",
+            "active_days_last_30_days",
+            "clicks_last_7_days",
+            "clicks_last_14_days",
+            "clicks_last_30_days",
+            "average_clicks_per_active_day"
+        ],
+        "target": "target_low_score"
+    },
+    "catboost": {
+        "threshold": 0.7446328088629784,
+        "features": [
+            "code_module",
+            "code_presentation",
+            "target_assessment_type",
+            "target_date",
+            "total_clicks",
+            "activity_records",
+            "active_days",
+            "active_days_last_30_days",
+            "clicks_last_7_days",
+            "clicks_last_14_days",
+            "clicks_last_30_days",
+            "average_clicks_per_active_day"
+        ],
+        "target": "target_low_score"
+    }
+}

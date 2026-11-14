@@ -1,0 +1,48 @@
+{
+    "seen_students": {
+        "records": 4849,
+        "unique_students": 991,
+        "at_risk_examples": 323,
+        "risk_rate": 0.06661167250979583,
+        "accuracy": 0.8552278820375335,
+        "precision": 0.1657848324514991,
+        "recall": 0.29102167182662536,
+        "f1_score": 0.21123595505617979,
+        "pr_auc": 0.13502750028950944,
+        "roc_auc": 0.6915526938267922,
+        "balanced_accuracy": 0.593257190310131,
+        "confusion_matrix": [
+            [
+                4053,
+                473
+            ],
+            [
+                229,
+                94
+            ]
+        ]
+    },
+    "unseen_students": {
+        "records": 36213,
+        "unique_students": 6759,
+        "at_risk_examples": 1245,
+        "risk_rate": 0.03437991881368569,
+        "accuracy": 0.8848755971612404,
+        "precision": 0.13284781516825717,
+        "recall": 0.4248995983935743,
+        "f1_score": 0.20241056055098527,
+        "pr_auc": 0.13095016739011564,
+        "roc_auc": 0.7934430469533131,
+        "balanced_accuracy": 0.6630760860876588,
+        "confusion_matrix": [
+            [
+                31515,
+                3453
+            ],
+            [
+                716,
+                529
+            ]
+        ]
+    }
+}

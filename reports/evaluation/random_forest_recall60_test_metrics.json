@@ -1,0 +1,22 @@
+{
+    "model": "random_forest",
+    "dataset": "2014J_chronological_test",
+    "threshold": 0.24567134268537077,
+    "threshold_selected_on": "validation",
+    "test_rows": 41062,
+    "actual_positive_cases": 1568,
+    "flagged_students": 10967,
+    "accuracy": 0.743241926842336,
+    "precision": 0.09081790827026534,
+    "recall": 0.6352040816326531,
+    "f1": 0.15891503789389708,
+    "pr_auc": 0.12900793944100036,
+    "roc_auc": 0.7784089830100775,
+    "balanced_accuracy": 0.6913676761026992,
+    "confusion_matrix": {
+        "true_negatives": 29523,
+        "false_positives": 9971,
+        "false_negatives": 572,
+        "true_positives": 996
+    }
+}

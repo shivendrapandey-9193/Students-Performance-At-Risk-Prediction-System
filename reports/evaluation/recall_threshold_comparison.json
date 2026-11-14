@@ -1,0 +1,82 @@
+[
+    {
+        "model": "random_forest",
+        "target_recall": 0.6,
+        "threshold": 0.24567134268537077,
+        "precision": 0.11076085399054306,
+        "recall": 0.6006216006216006,
+        "f1": 0.1870312121945318,
+        "pr_auc": 0.17326456368571683,
+        "flagged_students": 6979
+    },
+    {
+        "model": "random_forest",
+        "target_recall": 0.7,
+        "threshold": 0.19460921843687376,
+        "precision": 0.09929546455306032,
+        "recall": 0.7008547008547008,
+        "f1": 0.17394658181467554,
+        "pr_auc": 0.17326456368571683,
+        "flagged_students": 9084
+    },
+    {
+        "model": "lightgbm",
+        "target_recall": 0.6,
+        "threshold": 0.33993987975951906,
+        "precision": 0.0992552645095018,
+        "recall": 0.6006216006216006,
+        "f1": 0.1703581267217631,
+        "pr_auc": 0.16910400403349832,
+        "flagged_students": 7788
+    },
+    {
+        "model": "lightgbm",
+        "target_recall": 0.7,
+        "threshold": 0.2476352705410822,
+        "precision": 0.08608266970041714,
+        "recall": 0.7055167055167055,
+        "f1": 0.1534431770173215,
+        "pr_auc": 0.16910400403349832,
+        "flagged_students": 10548
+    },
+    {
+        "model": "xgboost",
+        "target_recall": 0.6,
+        "threshold": 0.367434869739479,
+        "precision": 0.10437483121793141,
+        "recall": 0.6006216006216006,
+        "f1": 0.17784424249396066,
+        "pr_auc": 0.17600466471665763,
+        "flagged_students": 7406
+    },
+    {
+        "model": "xgboost",
+        "target_recall": 0.7,
+        "threshold": 0.24959919839679362,
+        "precision": 0.08427382053654024,
+        "recall": 0.7078477078477079,
+        "f1": 0.15061585517070347,
+        "pr_auc": 0.17600466471665763,
+        "flagged_students": 10810
+    },
+    {
+        "model": "catboost",
+        "target_recall": 0.6,
+        "threshold": 0.4243887775551103,
+        "precision": 0.09792772302249178,
+        "recall": 0.6021756021756022,
+        "f1": 0.16845995000543418,
+        "pr_auc": 0.17324297638519018,
+        "flagged_students": 7914
+    },
+    {
+        "model": "catboost",
+        "target_recall": 0.7,
+        "threshold": 0.33208416833667337,
+        "precision": 0.08586387434554973,
+        "recall": 0.7008547008547008,
+        "f1": 0.15298507462686567,
+        "pr_auc": 0.17324297638519018,
+        "flagged_students": 10505
+    }
+]

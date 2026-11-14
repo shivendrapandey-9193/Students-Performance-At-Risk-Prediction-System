@@ -1,0 +1,42 @@
+{
+    "Logistic Regression": {
+        "model": "Logistic Regression",
+        "best_f1_threshold": 0.7575421325795864,
+        "best_f1": 0.2218463025611954,
+        "precision_at_best_f1": 0.16099614170466503,
+        "recall_at_best_f1": 0.35664335664335667,
+        "confusion_matrix_at_best_f1": [
+            [
+                27882,
+                2392
+            ],
+            [
+                828,
+                459
+            ]
+        ],
+        "threshold_for_recall_at_least_60_percent": 0.5977984924776945,
+        "precision_at_that_threshold": 0.10669427191166321,
+        "achieved_recall": 0.6006216006216006
+    },
+    "Random Forest": {
+        "model": "Random Forest",
+        "best_f1_threshold": 0.45828253743185854,
+        "best_f1": 0.2390961639512077,
+        "precision_at_best_f1": 0.18062723302897976,
+        "recall_at_best_f1": 0.35353535353535354,
+        "confusion_matrix_at_best_f1": [
+            [
+                28210,
+                2064
+            ],
+            [
+                832,
+                455
+            ]
+        ],
+        "threshold_for_recall_at_least_60_percent": 0.24610442568340374,
+        "precision_at_that_threshold": 0.110919787630937,
+        "achieved_recall": 0.6006216006216006
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "model": "Random Forest - Conservative",
+    "threshold": 0.4583,
+    "test_records": 41062,
+    "accuracy": 0.8813745068433101,
+    "precision": 0.1369531765223126,
+    "recall": 0.39732142857142855,
+    "f1_score": 0.20369462154650972,
+    "pr_auc": 0.12900793944100036,
+    "roc_auc": 0.7784089830100775,
+    "balanced_accuracy": 0.6489569618169848,
+    "confusion_matrix": [
+        [
+            35568,
+            3926
+        ],
+        [
+            945,
+            623
+        ]
+    ]
+}

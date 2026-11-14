@@ -1,0 +1,19 @@
+{
+    "model": "XGBoost",
+    "threshold": 0.727801501750946,
+    "test_rows": 41062,
+    "positive_cases": 1568,
+    "accuracy": 0.9119623983244849,
+    "precision": 0.1587195731910637,
+    "recall": 0.30357142857142855,
+    "f1": 0.20845193781475804,
+    "pr_auc": 0.13531933143797995,
+    "roc_auc": 0.7645458109498421,
+    "balanced_accuracy": 0.6198441535423103,
+    "true_negatives": 36971,
+    "false_positives": 2523,
+    "false_negatives": 1092,
+    "true_positives": 476,
+    "inference_seconds": 0.2719257999997353,
+    "rows_per_second": 151004.42841407462
+}
