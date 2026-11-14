@@ -16,7 +16,8 @@ def get_api_base_url() -> str:
     Centralized API URL resolution adhering strictly to deployment priority:
     1. Streamlit secrets (for Streamlit Community Cloud)
     2. Environment variables (API_BASE_URL or API_URL for containers / PaaS)
-    3. Localhost fallback (only for local development)
+    3. Active localhost check (for local development)
+    4. Live Render backend fallback (https://students-performance-at-risk-prediction.onrender.com)
     """
     configured_url = None
     try:
@@ -31,7 +32,17 @@ def get_api_base_url() -> str:
     if configured_url:
         return str(configured_url).rstrip("/")
 
-    return "http://127.0.0.1:8000"
+    # If running locally with uvicorn server active, use local server
+    local_url = "http://127.0.0.1:8000"
+    try:
+        res = requests.get(f"{local_url}/health", timeout=0.5)
+        if res.status_code == 200:
+            return local_url
+    except Exception:
+        pass
+
+    # Default to the live Render backend deployment
+    return "https://students-performance-at-risk-prediction.onrender.com"
 
 
 DEFAULT_API_URL = get_api_base_url()
@@ -221,6 +232,8 @@ def predict_batch_records(
     iterative POST /predict if batch endpoint is unavailable.
     """
     base_url = api_url or get_api_base_url()
+    if isinstance(df, list):
+        df = pd.DataFrame(df)
     valid, err_msg, clean_df = validate_batch_dataframe(df)
     if not valid:
         return {"success": False, "error": err_msg, "results_df": None, "summary": {}}
@@ -381,3 +394,7 @@ def predict_batch_records(
         "results_df": results_df,
         "summary": summary,
     }
+
+
+# Backwards compatibility alias
+predict_cohort_batch = predict_batch_records

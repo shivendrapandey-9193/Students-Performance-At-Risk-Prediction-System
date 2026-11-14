@@ -3,6 +3,14 @@ Student Insight AI — Academic Analytics & Early At-Risk Decision Support Platf
 Enterprise SaaS Dashboard built with Streamlit, Plotly, and FastAPI integration.
 """
 
+from pathlib import Path
+import sys
+
+# Ensure repository root is on sys.path regardless of execution entrypoint
+ROOT_DIR = Path(__file__).resolve().parents[2]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 from datetime import datetime
 import io
 import pandas as pd
@@ -82,7 +90,7 @@ selected_page = render_sidebar_nav(api_connected, active_threshold)
 # ===========================================================================
 # PAGE 1: DASHBOARD (EXECUTIVE OVERVIEW)
 # ===========================================================================
-if selected_page == "Dashboard":
+if selected_page in ["Home", "Dashboard"]:
     refresh = render_top_header(
         title="Student Performance Intelligence",
         subtitle="Executive analytics and early alert indicators for upcoming academic assessments.",
@@ -236,7 +244,7 @@ if selected_page == "Dashboard":
 # ===========================================================================
 # PAGE 2: STUDENT RISK ASSESSMENT (INTERACTIVE PREDICTION)
 # ===========================================================================
-elif selected_page == "Student Risk Assessment":
+elif selected_page in ["Check Student Risk", "Student Risk Assessment"]:
     refresh = render_top_header(
         title="Student Risk Assessment",
         subtitle="Evaluate individual student engagement signals ahead of target assessment deadlines.",
@@ -491,7 +499,7 @@ elif selected_page == "Student Risk Assessment":
 # ===========================================================================
 # PAGE 3: BATCH ANALYTICS
 # ===========================================================================
-elif selected_page == "Batch Analytics":
+elif selected_page in ["Upload & Analyze Students", "Batch Analytics"]:
     refresh = render_top_header(
         title="Batch Student Cohort Analytics",
         subtitle="Screen upcoming assessment cohorts in bulk using genuine backend prediction.",
@@ -820,7 +828,91 @@ elif selected_page == "Model Performance":
 # ===========================================================================
 # PAGE 5: ABOUT & METHODOLOGY
 # ===========================================================================
-elif selected_page == "About & Methodology":
+elif selected_page == "How to Use":
+    render_top_header(
+        title="How to Use Student Insight AI",
+        subtitle="Step-by-step user manual and operational reference for academic advisors and tutors.",
+        api_connected=api_connected,
+        latency_ms=api_latency,
+        model_name="Random Forest — Recall-Focused",
+    )
+
+    st.markdown("""
+    <div class="saas-card">
+        <div class="card-title">Step-by-Step Application Guide</div>
+        <p style="font-size: 13.5px; color: #1F2937; line-height: 1.7;">
+            Follow these sequential steps to screen individual students or evaluate full cohorts:
+        </p>
+        <div style="margin-top: 14px;">
+            <div style="font-size: 14.5px; font-weight: 700; color: #2563EB;">Step 1 — Open the Application & Check Connection</div>
+            <div style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+                Verify that the system tray at the bottom of the sidebar indicates <b>Backend Online</b>. The system automatically pings the microservice.
+            </div>
+
+            <div style="font-size: 14.5px; font-weight: 700; color: #2563EB;">Step 2 — Understand the Home Dashboard</div>
+            <div style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+                Review executive KPI cards: verified test accuracy (74.32%), recall (63.52%), precision (9.08%), and the recall-focused decision threshold (0.24567).
+            </div>
+
+            <div style="font-size: 14.5px; font-weight: 700; color: #2563EB;">Step 3 — Enter Student Information</div>
+            <div style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+                Navigate to <b>Check Student Risk</b>. You can either select a verified pre-made student scenario or manually input course details and digital interaction counts.
+            </div>
+
+            <div style="font-size: 14.5px; font-weight: 700; color: #2563EB;">Step 4 — Click "Analyze Student Risk"</div>
+            <div style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+                Click the blue <b>Analyze Student Risk</b> button. The system validates logical consistency and computes the risk probability in real time (<10ms).
+            </div>
+
+            <div style="font-size: 14.5px; font-weight: 700; color: #2563EB;">Step 5 — Understand the Risk Result</div>
+            <div style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+                Review the decision result badge and speedometer gauge:
+                <ul style="margin: 4px 0 0 20px;">
+                    <li><b>Below Review Threshold:</b> Student engagement meets expected pacing. Maintain standard tutor communications.</li>
+                    <li><b>Elevated Review Priority:</b> Student exhibits significant study disengagement. Follow the suggested educator actions (e.g. check-in email, tutoring offer).</li>
+                </ul>
+            </div>
+
+            <div style="font-size: 14.5px; font-weight: 700; color: #2563EB;">Step 6 — Upload a CSV File for Bulk Analysis</div>
+            <div style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+                Navigate to <b>Upload & Analyze Students</b>. Click <b>Download Sample Student CSV</b> to inspect required columns, then upload your course roster.
+            </div>
+
+            <div style="font-size: 14.5px; font-weight: 700; color: #2563EB;">Step 7 — Download the Prediction Report</div>
+            <div style="font-size: 13px; color: #667085; margin-bottom: 12px;">
+                Filter by risk category, review flagged students, and click <b>Download Filtered Results as CSV</b> for institutional reporting.
+            </div>
+
+            <div style="font-size: 14.5px; font-weight: 700; color: #2563EB;">Step 8 — Understand Model Performance</div>
+            <div style="font-size: 13px; color: #667085; margin-bottom: 0;">
+                Navigate to <b>Model Performance</b> to inspect the verified confusion matrix, feature importance rankings, and threshold tuning rationale.
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+    st.markdown("### Student Engagement Input Field Dictionary")
+    st.caption("Detailed definitions, educational significance, and typical numerical ranges for each student input feature.")
+
+    field_dict_df = pd.DataFrame([
+        {"Field": "Course Module", "Description": "Curriculum course code (e.g. AAA to GGG)", "Typical Range": "AAA – GGG"},
+        {"Field": "Course Presentation", "Description": "Academic term code (B = February, J = October)", "Typical Range": "2013B – 2014J"},
+        {"Field": "Assessment Type", "Description": "Tutor-Marked (TMA) or Computer-Marked (CMA)", "Typical Range": "TMA or CMA"},
+        {"Field": "Assessment Due Date", "Description": "Scheduled submission deadline in days from term start", "Typical Range": "18 – 260 days"},
+        {"Field": "Total Platform Clicks", "Description": "Cumulative clicks recorded in the learning portal to date", "Typical Range": "0 – 15,000+"},
+        {"Field": "Interaction Records", "Description": "Distinct study interaction events logged across resources", "Typical Range": "0 – 2,500+"},
+        {"Field": "Total Active Days", "Description": "Unique calendar days with at least one recorded action", "Typical Range": "1 – 180 days"},
+        {"Field": "Active Days in Last 30d", "Description": "Study consistency over the past month", "Typical Range": "0 – 30 days"},
+        {"Field": "Clicks in Last 7 Days", "Description": "Immediate pre-deadline engagement recency", "Typical Range": "0 – 1,000+"},
+        {"Field": "Clicks in Last 14 Days", "Description": "Fortnightly study volume and revision intensity", "Typical Range": "0 – 2,500+"},
+        {"Field": "Clicks in Last 30 Days", "Description": "Monthly study volume leading to deadline", "Typical Range": "0 – 5,000+"},
+        {"Field": "Avg Clicks / Active Day", "Description": "Average digital engagement depth per active login day", "Typical Range": "10 – 60 clicks/day"},
+    ])
+    st.table(field_dict_df)
+
+
+elif selected_page in ["About", "About & Methodology"]:
     refresh = render_top_header(
         title="About & Methodology",
         subtitle="Data provenance, experimental splitting rigor, and the ethical charter governing model deployment.",
@@ -1003,8 +1095,8 @@ elif selected_page == "API Status":
             <div style="font-size: 12.5px; color: {COLORS['secondary_text']};">
                 <strong>Troubleshooting Steps:</strong>
                 <ol style="padding-left: 18px; margin: 6px 0 0 0; line-height: 1.5;">
-                    <li>Ensure you are running commands from the project root: <code>E:\Student-At-Risk-Prediction</code>.</li>
-                    <li>Verify the virtual environment is activated: <code>.\.venv\Scripts\Activate.ps1</code>.</li>
+                    <li>Ensure you are running commands from the project root: <code>E:/Student-At-Risk-Prediction</code>.</li>
+                    <li>Verify the virtual environment is activated: <code>./.venv/Scripts/Activate.ps1</code>.</li>
                     <li>Verify port 8000 is not occupied by another process.</li>
                 </ol>
             </div>

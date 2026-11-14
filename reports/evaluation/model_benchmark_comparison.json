@@ -1,0 +1,128 @@
+[
+    {
+        "model": "CatBoost",
+        "validation_accuracy": 0.9254142771141599,
+        "validation_precision": 0.20541137493097736,
+        "validation_recall": 0.289044289044289,
+        "validation_f1": 0.24015493867010976,
+        "validation_roc_auc": 0.7668872292476706,
+        "validation_pr_auc": 0.17429893074429875,
+        "validation_balanced_accuracy": 0.6207558764373193,
+        "optimal_threshold": 0.755,
+        "confusion_matrix": {
+            "tn": 28835,
+            "fp": 1439,
+            "fn": 915,
+            "tp": 372
+        },
+        "training_seconds": 3.64
+    },
+    {
+        "model": "LightGBM",
+        "validation_accuracy": 0.9255093311365292,
+        "validation_precision": 0.21149674620390455,
+        "validation_recall": 0.30303030303030304,
+        "validation_f1": 0.2491216863621846,
+        "validation_roc_auc": 0.7644310043893845,
+        "validation_pr_auc": 0.16997685735943313,
+        "validation_balanced_accuracy": 0.6275011460979618,
+        "optimal_threshold": 0.735,
+        "confusion_matrix": {
+            "tn": 28820,
+            "fp": 1454,
+            "fn": 897,
+            "tp": 390
+        },
+        "training_seconds": 0.53
+    },
+    {
+        "model": "XGBoost",
+        "validation_accuracy": 0.9228795031843098,
+        "validation_precision": 0.1979989468141127,
+        "validation_recall": 0.29215229215229216,
+        "validation_f1": 0.23603264281230382,
+        "validation_roc_auc": 0.7599671510948514,
+        "validation_pr_auc": 0.16499914683639388,
+        "validation_balanced_accuracy": 0.6209225489300801,
+        "optimal_threshold": 0.7050000000000001,
+        "confusion_matrix": {
+            "tn": 28751,
+            "fp": 1523,
+            "fn": 911,
+            "tp": 376
+        },
+        "training_seconds": 1.59
+    },
+    {
+        "model": "Random Forest",
+        "validation_accuracy": 0.9102056335350591,
+        "validation_precision": 0.17944467467882305,
+        "validation_recall": 0.33644133644133645,
+        "validation_f1": 0.23405405405405405,
+        "validation_roc_auc": 0.7897994355515662,
+        "validation_pr_auc": 0.17406883717456959,
+        "validation_balanced_accuracy": 0.6355193403485668,
+        "optimal_threshold": 0.495,
+        "confusion_matrix": {
+            "tn": 28294,
+            "fp": 1980,
+            "fn": 854,
+            "tp": 433
+        },
+        "training_seconds": 4.14
+    },
+    {
+        "model": "Extra Trees",
+        "validation_accuracy": 0.9122017680048161,
+        "validation_precision": 0.18263473053892215,
+        "validation_recall": 0.3317793317793318,
+        "validation_f1": 0.23558620689655171,
+        "validation_roc_auc": 0.7762024865975451,
+        "validation_pr_auc": 0.1729964685864577,
+        "validation_balanced_accuracy": 0.6343279297464407,
+        "optimal_threshold": 0.6699999999999999,
+        "confusion_matrix": {
+            "tn": 28363,
+            "fp": 1911,
+            "fn": 860,
+            "tp": 427
+        },
+        "training_seconds": 2.47
+    },
+    {
+        "model": "Gradient Boosting",
+        "validation_accuracy": 0.9511105478280156,
+        "validation_precision": 0.26296296296296295,
+        "validation_recall": 0.11033411033411034,
+        "validation_f1": 0.15544608648056923,
+        "validation_roc_auc": 0.7483386135199572,
+        "validation_pr_auc": 0.13344956944201336,
+        "validation_balanced_accuracy": 0.5485937579483195,
+        "optimal_threshold": 0.3,
+        "confusion_matrix": {
+            "tn": 29876,
+            "fp": 398,
+            "fn": 1145,
+            "tp": 142
+        },
+        "training_seconds": 60.79
+    },
+    {
+        "model": "Logistic Regression",
+        "validation_accuracy": 0.9040904914292957,
+        "validation_precision": 0.16252909231962762,
+        "validation_recall": 0.32556332556332557,
+        "validation_f1": 0.21681759379042692,
+        "validation_roc_auc": 0.7569595390332656,
+        "validation_pr_auc": 0.1476119084560858,
+        "validation_balanced_accuracy": 0.627124002743346,
+        "optimal_threshold": 0.775,
+        "confusion_matrix": {
+            "tn": 28115,
+            "fp": 2159,
+            "fn": 868,
+            "tp": 419
+        },
+        "training_seconds": 0.16
+    }
+]

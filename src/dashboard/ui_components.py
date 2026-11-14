@@ -415,12 +415,12 @@ def render_sidebar_nav(api_connected: bool, active_threshold: float) -> str:
         page = st.radio(
             "PLATFORM NAVIGATION",
             [
-                "Dashboard",
-                "Student Risk Assessment",
-                "Batch Analytics",
+                "Home",
+                "Check Student Risk",
+                "Upload & Analyze Students",
                 "Model Performance",
-                "About & Methodology",
-                "API Status",
+                "How to Use",
+                "About",
             ],
             index=0,
             label_visibility="visible",
