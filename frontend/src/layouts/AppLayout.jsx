@@ -7,6 +7,7 @@ import InsightAIAssistant from '../components/InsightAIAssistant';
 export default function AppLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [assistantOpen, setAssistantOpen] = useState(false);
+  const [analysisContext, setAnalysisContext] = useState(null);
   const location = useLocation();
 
   const getPageTitle = (pathname) => {
@@ -28,14 +29,15 @@ export default function AppLayout() {
         />
 
         <main className="flex-1 p-4 lg:p-8 max-w-7xl w-full mx-auto">
-          <Outlet context={{ openAssistant: () => setAssistantOpen(true) }} />
+          <Outlet context={{ openAssistant: () => setAssistantOpen(true), setAnalysisContext }} />
         </main>
       </div>
 
       {/* Persistent Insight AI Chatbot Drawer */}
       <InsightAIAssistant 
         isOpen={assistantOpen} 
-        setIsOpen={setAssistantOpen} 
+        setIsOpen={setAssistantOpen}
+        analysisContext={analysisContext}
       />
     </div>
   );
