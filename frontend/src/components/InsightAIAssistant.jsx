@@ -23,7 +23,7 @@ const SUGGESTED_QUESTIONS = [
   "How Does Student Prediction Work?"
 ];
 
-export default function InsightAIAssistant({ isOpen, setIsOpen }) {
+export default function InsightAIAssistant({ isOpen, setIsOpen, analysisContext }) {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -56,14 +56,14 @@ export default function InsightAIAssistant({ isOpen, setIsOpen }) {
     setLoading(true);
 
     try {
-      const assistantReply = await askInsightAI(updatedHistory);
+      const assistantReply = await askInsightAI(updatedHistory, analysisContext);
       setMessages([...updatedHistory, { role: 'assistant', content: assistantReply }]);
     } catch (error) {
       console.error('Chat error:', error);
       const errMsg = error.message || 'Error connecting to AI service.';
       setMessages([
         ...updatedHistory, 
-        { role: 'assistant', content: `⚠️ **Notice:** ${errMsg}\n\nPlease verify that your connection or Groq API credentials are configured.` }
+        { role: 'assistant', content: `⚠️ **Notice:** ${errMsg}\n\nPlease check the backend service configuration and try again.` }
       ]);
     } finally {
       setLoading(false);
