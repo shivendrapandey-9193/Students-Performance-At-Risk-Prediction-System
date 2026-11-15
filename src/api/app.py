@@ -13,6 +13,7 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, model_validator
+from src.api.chat import router as chat_router
 
 # Configure structured logging
 logging.basicConfig(
@@ -81,6 +82,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Secure conversational endpoint; existing prediction routes remain unchanged.
+app.include_router(chat_router)
 
 
 # ---------------------------------------------------------------------------
