@@ -12,7 +12,7 @@ import {
   HelpCircle,
   ChevronRight
 } from 'lucide-react';
-import axios from 'axios';
+import { askInsightAI } from '../services/api';
 
 const SUGGESTED_QUESTIONS = [
   "Explain This Project",
@@ -56,18 +56,14 @@ export default function InsightAIAssistant({ isOpen, setIsOpen }) {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/chat/message', {
-        messages: updatedHistory
-      });
-
-      const assistantReply = response.data.reply || "I couldn't process that response.";
+      const assistantReply = await askInsightAI(updatedHistory);
       setMessages([...updatedHistory, { role: 'assistant', content: assistantReply }]);
     } catch (error) {
       console.error('Chat error:', error);
-      const errMsg = error.response?.data?.details || error.message || 'Error connecting to AI service.';
+      const errMsg = error.message || 'Error connecting to AI service.';
       setMessages([
         ...updatedHistory, 
-        { role: 'assistant', content: `⚠️ **Error:** ${errMsg}\n\nPlease verify that the Node.js backend and Groq API are reachable.` }
+        { role: 'assistant', content: `⚠️ **Notice:** ${errMsg}\n\nPlease verify that your connection or Groq API credentials are configured.` }
       ]);
     } finally {
       setLoading(false);

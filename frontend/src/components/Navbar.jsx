@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, Sparkles, Server, CheckCircle2, AlertCircle } from 'lucide-react';
-import axios from 'axios';
+import { checkBackendHealth } from '../services/api';
 
 export default function Navbar({ setMobileOpen, onOpenAssistant, pageTitle }) {
   const [backendStatus, setBackendStatus] = useState('checking');
 
   useEffect(() => {
     let mounted = true;
-    axios.get('/api/health')
+    checkBackendHealth()
       .then(res => {
         if (mounted) {
-          setBackendStatus(res.data.status === 'healthy' ? 'online' : 'degraded');
+          setBackendStatus(res.status);
         }
       })
       .catch(() => {

@@ -1,0 +1,9 @@
+id,code_module,code_presentation,target_assessment_type,target_date,total_clicks,activity_records,active_days,active_days_last_30_days,clicks_last_7_days,clicks_last_14_days,clicks_last_30_days,average_clicks_per_active_day
+STU-2001,BBB,2014J,TMA,54,42,12,6,1,0,5,15,7.0
+STU-2002,BBB,2014J,TMA,54,210,65,18,8,12,45,95,11.6
+STU-2003,AAA,2014J,TMA,54,850,210,42,21,80,190,380,20.2
+STU-2004,CCC,2014J,CMA,32,15,5,2,0,0,0,10,7.5
+STU-2005,DDD,2014J,TMA,60,620,150,30,15,40,110,240,20.6
+STU-2006,EEE,2014J,TMA,45,180,45,14,5,8,30,70,12.8
+STU-2007,FFF,2014J,CMA,28,310,95,22,12,35,85,160,14.1
+STU-2008,GGG,2014J,TMA,50,90,25,9,2,0,10,35,10.0

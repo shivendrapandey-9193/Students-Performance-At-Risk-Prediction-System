@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   BarChart3, 
   Scale, 
   Layers, 
   ShieldCheck, 
-  Info,
   Calendar,
-  CheckCircle2,
-  AlertTriangle
+  CheckCircle2
 } from 'lucide-react';
 import { 
   BarChart, 
@@ -19,10 +17,9 @@ import {
   Cell 
 } from 'recharts';
 import MetricCard from '../components/MetricCard';
-import axios from 'axios';
 
 export default function ModelInsights() {
-  const [features, setFeatures] = useState([
+  const [features] = useState([
     { name: "code_module", weight: 9.05, importanceText: "9.05%" },
     { name: "active_days_last_30_days", weight: 3.46, importanceText: "3.46%" },
     { name: "target_date", weight: 3.40, importanceText: "3.40%" },
@@ -36,21 +33,6 @@ export default function ModelInsights() {
     { name: "average_clicks_per_active_day", weight: 0.21, importanceText: "0.21%" },
     { name: "code_presentation", weight: 0.00, importanceText: "0.00%" }
   ]);
-
-  useEffect(() => {
-    axios.get('/api/model/feature-importance')
-      .then(res => {
-        if (res.data?.features && Array.isArray(res.data.features)) {
-          const parsed = res.data.features.map(f => ({
-            name: f.name,
-            weight: parseFloat(f.importance.replace('%', '')) || 0,
-            importanceText: f.importance
-          }));
-          setFeatures(parsed);
-        }
-      })
-      .catch(() => {});
-  }, []);
 
   return (
     <div className="space-y-8">

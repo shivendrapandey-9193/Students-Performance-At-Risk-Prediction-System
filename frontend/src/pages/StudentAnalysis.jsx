@@ -15,7 +15,12 @@ import {
 } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import RiskBadge from '../components/RiskBadge';
-import axios from 'axios';
+import { 
+  predictIndividualStudent, 
+  predictBatchStudents, 
+  parseStudentCsv, 
+  downloadSampleCsv 
+} from '../services/api';
 
 const PRESETS = {
   custom: {
@@ -135,11 +140,15 @@ export default function StudentAnalysis() {
     }
 
     try {
-      const response = await axios.post('/api/predict', formValues);
-      setPredictionResult(response.data);
+      const data = await predictIndividualStudent(formValues);
+      setPredictionResult(data);
     } catch (err) {
       console.error(err);
-      setIndividualError(err.response?.data?.details || err.message || "Failed to calculate prediction.");
+      const detailMsg = err.response?.data?.detail;
+      const errorText = Array.isArray(detailMsg) 
+        ? detailMsg.map(d => `${d.loc?.slice(-1)}: ${d.msg}`).join(', ') 
+        : (detailMsg || err.response?.data?.details || err.message || "Failed to calculate prediction.");
+      setIndividualError(errorText);
     } finally {
       setIndividualLoading(false);
     }
@@ -186,17 +195,18 @@ export default function StudentAnalysis() {
     setBatchLoading(true);
     setBatchError(null);
 
-    const formData = new FormData();
-    formData.append('file', batchFile);
-
     try {
-      const response = await axios.post('/api/predict/batch', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      setBatchResults(response.data);
+      const text = await batchFile.text();
+      const parsedStudents = parseStudentCsv(text);
+      const data = await predictBatchStudents(parsedStudents);
+      setBatchResults(data);
     } catch (err) {
       console.error(err);
-      setBatchError(err.response?.data?.details || err.message || "Batch evaluation failed.");
+      const detailMsg = err.response?.data?.detail;
+      const errorText = Array.isArray(detailMsg) 
+        ? detailMsg.map(d => `${d.loc?.slice(-1)}: ${d.msg}`).join(', ') 
+        : (detailMsg || err.response?.data?.details || err.message || "Batch evaluation failed.");
+      setBatchError(errorText);
     } finally {
       setBatchLoading(false);
     }
@@ -633,14 +643,14 @@ export default function StudentAnalysis() {
                 </p>
               </div>
 
-              <a
-                href="/api/sample-csv"
-                download="student_sample_cohort.csv"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium transition"
+              <button
+                type="button"
+                onClick={downloadSampleCsv}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium transition cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5 text-blue-400" />
                 <span>Download Sample CSV</span>
-              </a>
+              </button>
             </div>
 
             {batchError && (
