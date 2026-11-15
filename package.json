@@ -1,0 +1,13 @@
+{
+  "name": "student-insight-ai",
+  "version": "2.0.0",
+  "description": "Full-Stack AI-Powered Academic Analytics & Early-Warning Platform",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "start:backend": "npm --prefix backend start",
+    "start:python": "cd . && .venv\\Scripts\\python.exe -m uvicorn src.api.app:app --host 127.0.0.1 --port 8000",
+    "test:python": "cd . && .venv\\Scripts\\python.exe -m pytest tests/"
+  }
+}
