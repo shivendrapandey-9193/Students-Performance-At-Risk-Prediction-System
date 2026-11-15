@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { PROJECT_KNOWLEDGE } from './projectKnowledge';
 
 // Resolve base URL from environment variable or fallback to live Render backend
 const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://students-performance-at-risk-prediction.onrender.com';
@@ -201,65 +200,40 @@ STU-2008,GGG,2014J,TMA,50,90,25,9,2,0,10,35,10.0
 }
 
 /**
- * 6. Groq Cloud AI Assistant Integration
+ * 6. Secure Insight AI chat proxy.
+ * The Groq credential is held only by the FastAPI service on Render.
  */
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || '';
-const GROQ_MODEL = import.meta.env.VITE_GROQ_MODEL || 'qwen/qwen3.8-27b';
+export async function askInsightAI(messages, context = null) {
+  if (!Array.isArray(messages) || messages.length === 0) {
+    throw new Error('Send a message to start the conversation.');
+  }
 
-export async function askInsightAI(messages) {
-  const systemPrompt = `You are Insight AI Assistant, the expert AI companion for Student Insight AI — an academic analytics and student early-warning platform.
-Project Knowledge:
-${JSON.stringify(PROJECT_KNOWLEDGE, null, 2)}
+  const conversation = messages
+    .filter(message => ['user', 'assistant'].includes(message.role))
+    .slice(-12)
+    .map(message => ({
+      role: message.role,
+      content: String(message.content || '').trim()
+    }));
 
-Guidelines:
-- Tone: Professional, encouraging, and authoritative.
-- Cite verified facts: Accuracy 74.32%, Recall 63.52%, Threshold 0.2457, Dataset OULAD 2014J (41,062 rows), Random Forest.
-- Rationale: Explain that 90%+ accuracy is a deceptive metric in imbalanced data (~3.8% failure rate) where a dummy model gets 96.2% accuracy with 0% recall. Our 0.2457 cutoff optimizes for 63.52% recall to save students from unassisted failure.
-- Ethics: Predictions are advisory screening aids; protected demographics are excluded to eliminate bias.`;
-
-  // 1. Try Groq Cloud API if key is present
-  if (GROQ_API_KEY && GROQ_API_KEY.startsWith('gsk_')) {
-    try {
-      const response = await axios.post(
-        'https://api.groq.com/openai/v1/chat/completions',
-        {
-          model: GROQ_MODEL,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            ...messages.slice(-8)
-          ],
-          temperature: 0.4,
-          max_tokens: 1000
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${GROQ_API_KEY}`,
-            'Content-Type': 'application/json'
-          },
-          timeout: 25000
-        }
-      );
-      const reply = response.data?.choices?.[0]?.message?.content;
-      if (reply) return reply;
-    } catch (groqErr) {
-      console.warn('[AI Assistant] Groq API direct call failed, using intelligent domain fallback:', groqErr.message);
+  try {
+    const response = await apiClient.post('/chat', {
+      messages: conversation,
+      ...(context ? { context } : {})
+    }, { timeout: 40000 });
+    const reply = response.data?.reply;
+    if (typeof reply !== 'string' || !reply.trim()) {
+      throw new Error('Insight AI returned an empty response. Please try again.');
     }
+    return reply.trim();
+  } catch (error) {
+    const detail = error.response?.data?.detail;
+    if (error.code === 'ECONNABORTED') {
+      throw new Error('Insight AI took too long to respond. Please try again.');
+    }
+    if (!error.response) {
+      throw new Error('Cannot reach the Student Insight AI backend. Please check the connection and try again.');
+    }
+    throw new Error(typeof detail === 'string' ? detail : 'Insight AI is temporarily unavailable. Please try again.');
   }
-
-  // 2. Intelligent Knowledge Base Fallback if network or key is unavailable
-  const lastUserMsg = messages[messages.length - 1]?.content?.toLowerCase() || '';
-
-  if (lastUserMsg.includes('accuracy') || lastUserMsg.includes('performance') || lastUserMsg.includes('metric')) {
-    return `### 📊 Model Performance Highlights\n\n- **Accuracy:** **74.32%**\n- **Recall (Sensitivity):** **63.52%** (Catches 996 out of 1,568 struggling students)\n- **Decision Cutoff:** **0.2457**\n- **ROC-AUC:** **77.84%**\n- **PR-AUC:** **12.90%**\n\n**Why not 90% accuracy?**\nIn our dataset of 41,062 assessment submissions, only 3.8% result in failure. A naive model predicting 'safe' for everyone gets 96.2% accuracy but 0% recall! We deliberately optimized for high recall to intercept struggling students early.`;
-  }
-
-  if (lastUserMsg.includes('architecture') || lastUserMsg.includes('stack')) {
-    return `### 🏗️ Full-Stack Architecture\n\n1. **Frontend:** React.js 18 + Vite + Tailwind CSS + Recharts (Hosted on Vercel)\n2. **ML Backend:** Python FastAPI + Scikit-Learn Random Forest (Hosted on Render: \`https://students-performance-at-risk-prediction.onrender.com\`)\n3. **Decision Policy:** Validation-calibrated cutoff $\\tau = 0.2457$\n4. **Data Hygiene:** Strict chronological split (2013B/J Train, 2014B Val, 2014J Test) with zero temporal leakage.`;
-  }
-
-  if (lastUserMsg.includes('interview') || lastUserMsg.includes('explain')) {
-    return `### 🎓 Project Explanation for Interviews\n\n**Student Insight AI** is an early-warning academic analytics SaaS. It predicts whether a student will score <40 on upcoming coursework assessments using 12 pre-deadline VLE clickstream features.\n\n**Key Talking Points:**\n- **Temporal Integrity:** We strictly split data chronologically (2013 train $\\rightarrow$ 2014 test) to prevent future data leakage.\n- **Recall Priority:** In student retention, False Negatives (missing a failing student) are far more costly than False Positives (friendly advisor check-in).\n- **Fairness:** Protected demographics were excluded to eliminate bias.`;
-  }
-
-  return `I am **Insight AI Assistant**. I can answer any questions about our **Random Forest model**, the **OULAD dataset**, our **74.32% accuracy and 63.52% recall**, or our **FastAPI + React SaaS architecture**. How can I help you today?`;
 }
