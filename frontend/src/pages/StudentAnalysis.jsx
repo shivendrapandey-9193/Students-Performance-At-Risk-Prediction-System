@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { 
   Users, 
   FileSpreadsheet, 
@@ -94,6 +95,7 @@ const PRESETS = {
 };
 
 export default function StudentAnalysis() {
+  const { setAnalysisContext } = useOutletContext();
   const [activeTab, setActiveTab] = useState('individual'); // 'individual' or 'batch'
 
   // ---------------------------------------------------------------------------
@@ -165,6 +167,31 @@ export default function StudentAnalysis() {
   const [filterRisk, setFilterRisk] = useState('all'); // 'all', 'flagged', 'safe'
   const [searchQuery, setSearchQuery] = useState('');
   const [inspectedStudent, setInspectedStudent] = useState(null);
+
+  // Keep the assistant aware of the latest analysis without sending the full cohort.
+  useEffect(() => {
+    const context = {
+      screen: "Student Analysis",
+      active_tab: activeTab,
+      ...(predictionResult ? {
+        individual_prediction: {
+          input_features: formValues,
+          result: predictionResult
+        }
+      } : {}),
+      ...(batchResults ? {
+        batch_summary: {
+          total_processed: batchResults.total_processed,
+          flagged_count: batchResults.flagged_count,
+          safe_count: batchResults.safe_count,
+          risk_rate_percent: batchResults.risk_rate_percent,
+          threshold: batchResults.threshold
+        }
+      } : {}),
+      ...(inspectedStudent ? { selected_batch_student: inspectedStudent } : {})
+    };
+    setAnalysisContext(context);
+  }, [activeTab, formValues, predictionResult, batchResults, inspectedStudent, setAnalysisContext]);
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
